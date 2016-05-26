@@ -5,4 +5,4 @@ K-line pattern recognition library written in Python.
 Pandas
 Numpy
 
-# Usage
+# Usages
