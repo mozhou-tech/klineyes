@@ -31,7 +31,7 @@ def data_validator(input_data):
     return input_data
 
 
-def get_pattern_date(input_data, pattern):
+def get_dates_by_pattern(input_data, pattern):
     '''
 
     :param input:
@@ -54,4 +54,4 @@ def get_day_pattern(input_data):
 
 
 if __name__ == '__main__':
-    print get_pattern_date(input_data='input', pattern='star')
+    print get_dates_by_pattern(input_data='input', pattern='star')
