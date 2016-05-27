@@ -18,5 +18,8 @@ star = {
     },
     'shooting': {
         'expression': lambda x: True if x['top_height'] > 0.5 and x['bottom_height'] >= 0.1 and x['entity_height'] >= 0.1 and x['pct_amplitude'] >= 0.03 else False
+    },
+    'yi': {
+        'expression': lambda x: True if x['top_height'] == 0.0 and x['bottom_height'] == 0.0 and x['entity_height'] <= 0.01 else False
     }
 }
