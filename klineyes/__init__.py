@@ -1,5 +1,5 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-def hello():
-    return 'hello'
+import klineyes as ke
+
