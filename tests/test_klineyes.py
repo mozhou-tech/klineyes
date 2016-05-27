@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import klineyes
 
-class TestJoke(TestCase):
+class TestEyes(TestCase):
     def test_is_string(self):
         pass
         # s = klineyes.joke()

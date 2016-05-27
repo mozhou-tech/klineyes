@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-import klineyes as ke
+from klineyes import (get_pattern_date)
+
+
 
