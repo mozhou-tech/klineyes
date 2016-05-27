@@ -3,6 +3,7 @@
 import pandas as pd
 import numpy as np
 from common import BASE_DIR
+import classifier.single
 
 
 def load_test_data(ticker='000001'):
@@ -39,7 +40,12 @@ def get_pattern_date(input_data, pattern):
     '''
     input_data = load_test_data()
     input_data = data_validator(input_data)
-    return input_data
+    df = pd.DataFrame(input_data, columns=['ticker', 'tradeDate', 'turnoverVol', 'closePrice', 'highestPrice', 'lowestPrice', 'openPrice'])
+    for i, row in df.iterrows():
+        if i > 0:
+            row = row.append(pd.Series({'preClosePrice': df[i-1:i].closePrice.values[0]}))
+            if classifier.single.get_shadow_rate(row):
+                print row.tradeDate
 
 
 if __name__ == '__main__':
