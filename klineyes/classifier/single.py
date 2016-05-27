@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-def get_shadow_rate(data):
+def get_candlestick_feature(data):
     '''
     单根蜡烛线 参数计算 top_height bottom_height entity_height pct_change pct_amplitude positive
     :param data:

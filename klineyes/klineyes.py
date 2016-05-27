@@ -44,8 +44,13 @@ def get_pattern_date(input_data, pattern):
     for i, row in df.iterrows():
         if i > 0:
             row = row.append(pd.Series({'preClosePrice': df[i-1:i].closePrice.values[0]}))
-            if classifier.single.get_shadow_rate(row):
+            if classifier.single.get_candlestick_feature(row):
                 print row.tradeDate
+
+
+def get_day_pattern(input_data):
+    pass
+
 
 
 if __name__ == '__main__':
