@@ -26,32 +26,36 @@ def data_validator(input_data):
         raise Exception('err data type.')
     if len(input_data) < 6:
         raise Exception('input array size is too small.')
-    if len(input_data[0]) < 7:
+    if len(input_data[0]) < 8:
         raise Exception('input array matrix at least 7 columns.')
     return input_data
 
 
 def get_dates_by_pattern(input_data, pattern):
     '''
-
+    获取图形对应的日期
     :param input:
     :param pattern:
     :return:
     '''
     input_data = load_test_data()
     input_data = data_validator(input_data)
-    df = pd.DataFrame(input_data, columns=['ticker', 'tradeDate', 'turnoverVol', 'closePrice', 'highestPrice', 'lowestPrice', 'openPrice'])
+    df = pd.DataFrame(input_data, columns=['ticker', 'tradeDate', 'turnoverVol', 'closePrice', 'highestPrice', 'lowestPrice', 'openPrice', 'preClosePrice'])
     for i, row in df.iterrows():
-        if i > 0:
-            row = row.append(pd.Series({'preClosePrice': df[i-1:i].closePrice.values[0]}))
-            if classifier.single.get_candlestick_feature(row):
-                print row.tradeDate
+        feature = classifier.single.classifier_single_date(row)
+        if feature is not None:
+            print row.tradeDate +' '+ feature
 
 
 def get_day_pattern(input_data):
+    '''
+    获取某一天的特征图形
+    :param input_data:
+    :return:
+    '''
     pass
 
 
 
 if __name__ == '__main__':
-    print get_dates_by_pattern(input_data='input', pattern='star')
+    (get_dates_by_pattern(input_data='input', pattern='star'))

@@ -23,3 +23,19 @@ star = {
         'expression': lambda x: True if x['top_height'] == 0.0 and x['bottom_height'] == 0.0 and x['entity_height'] <= 0.01 else False
     }
 }
+
+
+def classifier(candle_quant):
+    '''
+    根据蜡烛线特征数据，返回
+    :param date:
+    :param data:
+    :return:
+    '''
+    ret_rattern = None
+    for pattern, dictX in star.items():
+        if dictX['expression'](candle_quant) is True:
+            ret_rattern = pattern
+            break
+    if ret_rattern is not None:
+        return 'star.' + ret_rattern

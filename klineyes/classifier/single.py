@@ -1,5 +1,18 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
+from patterns.star import classifier as star_classifier
+
+
+def classifier_single_date(data):
+    '''
+    获取某一天的形态
+    :param date:
+    :param data:
+    :return:
+    '''
+    candle_quant = get_candlestick_feature(data)
+    return star_classifier(candle_quant)
+
 
 def get_candlestick_feature(data):
     '''
@@ -8,9 +21,7 @@ def get_candlestick_feature(data):
     :return:
     '''
     negtive_filter = lambda x: None if x < 0 else x       # 过滤负值（无效数据）
-
     calc_rate = lambda shadow_height, height : None if shadow_height is None or height == 0.0 or height is None else shadow_height / height     # 计算影线占实体的比例
-
     height = data.highestPrice - data.lowestPrice   # 蜡烛图长度
 
     return {
