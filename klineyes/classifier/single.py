@@ -1,21 +1,23 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from patterns import classifier_list
+from patterns import classifier_dict
 import pandas as pd
 import numpy as np
 
-def classifier_single_date(data):
+def classifier_single_date(data, ptypes=['star','hammer','line']):
     '''
     获取某一天的形态
-    :param date:
+    :param ptypes: 要获取的蜡烛线特征类型
     :param data:
     :return:
     '''
     candle_quant = get_candlestick_feature(data)
-    for classifier in classifier_list:
-        df = classifier(candle_quant)
-        if df is not None:
-            return df
+    for ptype in ptypes:
+        features = classifier_dict[ptype](candle_quant)
+        if features is not None:
+            return features
+
+
 
 
 def get_candlestick_feature(data):
