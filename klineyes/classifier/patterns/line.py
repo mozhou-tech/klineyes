@@ -18,11 +18,17 @@ line = {
         'callback': None
     },
     'flow': {
-        'positive': {
-            'name_zh': '十字星',
+        'long_positive': {
+            'name_zh': '大阳线',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] >= 0.4 and x['bottom_height'] >= 0.4 and x['entity_height'] <= 0.02 else False,
+            'expression': lambda x: True if x['top_height'] <= 0.1 and x['bottom_height'] <= 0.1 and x['bottom_height'] > 0.08 and x['positive'] else False,
+        },
+        'long_negative': {
+            'name_zh': '大阴线',
+            'feature': '',
+            'url': '',
+            'expression': lambda x: True if x['top_height'] <= 0.1 and x['bottom_height'] <= 0.1 and x['bottom_height'] > 0.08 and not x['positive'] else False,
         },
     }
 

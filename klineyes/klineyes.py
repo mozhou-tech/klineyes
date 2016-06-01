@@ -38,4 +38,4 @@ def get_dates_pattern(input_data):
     return ret_func(pd.DataFrame(ret_dict))
 
 if __name__ == '__main__':
-    print get_dates_pattern(input_data=load_test_data()[40:300])
+    print get_dates_pattern(input_data=load_test_data())
