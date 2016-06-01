@@ -28,14 +28,14 @@ def get_dates_pattern(input_data):
     :param input_data:
     :return:
     '''
+    ret_func = lambda x:None if x.empty else x.set_index('tradeDate')
     df = data_validator(input_data)
     ret_dict = []
     for i, row in df.iterrows():
         feature = classifier.single.classifier_single_date(row)
         if feature is not None:
             ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
-    return pd.DataFrame(ret_dict).set_index('tradeDate')
-
+    return ret_func(pd.DataFrame(ret_dict))
 
 if __name__ == '__main__':
-    print get_dates_pattern(input_data=load_test_data()[4:70])
+    print get_dates_pattern(input_data=load_test_data()[40:300])

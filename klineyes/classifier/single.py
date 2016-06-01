@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from patterns.star import classifier as star_classifier
-
+from patterns import classifier_list
+import pandas as pd
+import numpy as np
 
 def classifier_single_date(data):
     '''
@@ -11,7 +12,10 @@ def classifier_single_date(data):
     :return:
     '''
     candle_quant = get_candlestick_feature(data)
-    return star_classifier(candle_quant)
+    for classifier in classifier_list:
+        df = classifier(candle_quant)
+        if df is not None:
+            return df
 
 
 def get_candlestick_feature(data):

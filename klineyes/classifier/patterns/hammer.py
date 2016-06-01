@@ -2,17 +2,35 @@
 # -*- coding: UTF-8 -*-
 from base import classifier_base
 
+
+def basic_judge(x):
+    '''
+    对输入数据进行基础分类
+    :param x:
+    :return:
+    '''
+    return True
+
+
+def data_preprocessing(x):
+    if x['entity_height'] is None:
+        x['entity_height'] = 0
+    return x
+
 hammer = {
     'basic_judge': {
-        'expression': True,
+        'expression': basic_judge,
+    },
+    'data_preprocessing': {
+        'callback': data_preprocessing
     },
     'flow': {
         'hammer': {
-            "expression": lambda x: 'hammer_or_hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and
+            "expression": lambda x: 'hammer' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and
                                                            x['pct_amplitude'] >= 0.02 else False
         },
         'hanging': {
-            "expression": lambda x: 'hammer_or_hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and
+            "expression": lambda x: 'hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and
                                                            x['pct_amplitude'] >= 0.02 else False
         }
     }

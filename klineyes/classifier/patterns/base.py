@@ -10,11 +10,17 @@ def classifier_base(candle_quant, pattern_lib, ptype):
     :param ptype: 特征库类型
     :return:
     '''
-    ret_rattern = None
-    for pattern, dictX in pattern_lib['flow'].items():
-        if dictX['expression'](candle_quant) is True:
-            ret_rattern = pattern
-            break
-    if ret_rattern is not None:
-        return ptype + '.' + ret_rattern
+    if pattern_lib['data_preprocessing']['callback'] is None:
+        pass
+    else:
+        candle_quant = pattern_lib['data_preprocessing']['callback'](candle_quant)
+
+    if pattern_lib['basic_judge']['expression'](candle_quant):
+        ret_rattern = None
+        for pattern, dictX in pattern_lib['flow'].items():
+            if dictX['expression'](candle_quant) is True:
+                ret_rattern = pattern
+                break
+        if ret_rattern is not None:
+            return ptype + '.' + ret_rattern
 

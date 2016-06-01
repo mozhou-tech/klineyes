@@ -2,9 +2,25 @@
 # -*- coding: UTF-8 -*-
 from base import classifier_base
 
+
+def basic_judge(x):
+    '''
+    对输入数据进行基础分类
+    :param x:
+    :return:
+    '''
+    return True
+
+
+def data_preprocessing(x):
+    pass
+
 star = {
     'basic_judge': {
-        'expression': True,
+        'expression': basic_judge,
+    },
+    'data_preprocessing': {
+        'callback': None
     },
     'flow': {
         'normal': {
