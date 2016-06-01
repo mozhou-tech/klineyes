@@ -1,14 +1,24 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from base import classifier_base
+
 hammer = {
-    'hammer': {
-        "expression": lambda x: 'hammer_or_hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and x['pct_amplitude'] >= 0.02 else False
+    'basic_judge': {
+        'expression': True,
     },
-    'hanging': {
-        "expression": lambda x: 'hammer_or_hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and x['pct_amplitude'] >= 0.02 else False
+    'flow': {
+        'hammer': {
+            "expression": lambda x: 'hammer_or_hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and
+                                                           x['pct_amplitude'] >= 0.02 else False
+        },
+        'hanging': {
+            "expression": lambda x: 'hammer_or_hanging' if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and
+                                                           x['pct_amplitude'] >= 0.02 else False
+        }
     }
+
 }
+
 
 def classifier(candle_quant):
     '''

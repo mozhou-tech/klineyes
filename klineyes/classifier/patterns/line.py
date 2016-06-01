@@ -2,12 +2,17 @@
 # -*- coding: UTF-8 -*-
 from base import classifier_base
 line = {
-    'positive': {
-        'name_zh': '十字星',
-        'feature': '',
-        'url': '',
-        'expression': lambda x: True if x['top_height'] >= 0.4 and x['bottom_height'] >= 0.4 and x['entity_height'] <= 0.02 else False,
+    'basic_judge': {
+        'expression': True,
     },
+    'flow': {
+        'positive': {
+            'name_zh': '十字星',
+            'feature': '',
+            'url': '',
+            'expression': lambda x: True if x['top_height'] >= 0.4 and x['bottom_height'] >= 0.4 and x['entity_height'] <= 0.02 else False,
+        },
+    }
 
 }
 
