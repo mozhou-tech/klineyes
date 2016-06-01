@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-
+from base import classifier_base
 star = {
     'normal': {
         'name_zh': '十字星',
@@ -48,10 +48,4 @@ def classifier(candle_quant):
     :param data:
     :return:
     '''
-    ret_rattern = None
-    for pattern, dictX in star.items():
-        if dictX['expression'](candle_quant) is True:
-            ret_rattern = pattern
-            break
-    if ret_rattern is not None:
-        return 'star.' + ret_rattern
+    return classifier_base(candle_quant, star, 'star')

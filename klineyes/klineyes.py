@@ -4,6 +4,9 @@ import pandas as pd
 from common import data_validator, load_test_data
 import classifier.single
 
+'''
+主要模块
+'''
 def get_dates_by_pattern(input_data, pattern):
     '''
     获取图形对应的日期

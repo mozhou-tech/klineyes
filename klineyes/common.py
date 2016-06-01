@@ -33,6 +33,7 @@ def data_validator(input_data):
     else:
         raise exception.ValidatorError('unsupported dtype.')
 
+
 def load_test_data(ticker='000001'):
     '''
     Load test test_data for develop
