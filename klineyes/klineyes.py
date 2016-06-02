@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import pandas as pd
-from common import data_validator, load_test_data
-import classifier.single
+from klineyes.common import data_validator, load_test_data
+from klineyes.classifier import single
 
 '''
 主要模块
@@ -29,10 +29,10 @@ def get_dates_pattern(input_data, ptypes = None):
     df = data_validator(input_data)
     ret_dict = []
     for i, row in df.iterrows():
-        feature = classifier.single.classifier_single_date(row, ptypes=ptypes)
+        feature = single.classifier_single_date(row, ptypes=ptypes)
         if feature is not None:
             ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
     return ret_func(pd.DataFrame(ret_dict))
 
 if __name__ == '__main__':
-    print get_dates_pattern(input_data=load_test_data(), ptypes=['hammer', 'line', 'star'])
+    print(get_dates_pattern(input_data=load_test_data(), ptypes=['hammer', 'line', 'star']))

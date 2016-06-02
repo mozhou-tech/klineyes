@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from patterns import classifier_dict
+from klineyes.classifier.patterns import classifier_dict
 import pandas as pd
 import numpy as np
 

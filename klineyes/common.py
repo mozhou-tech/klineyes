@@ -3,7 +3,7 @@
 import os
 import pandas as pd
 import numpy as np
-import exception
+import klineyes.exception
 
 '''
 共用函数工具包

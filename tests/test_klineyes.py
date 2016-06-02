@@ -2,8 +2,10 @@ from unittest import TestCase
 
 import klineyes
 
+from klineyes.common import load_test_data
+
+
 class TestEyes(TestCase):
+
     def test_is_string(self):
-        pass
-        # s = klineyes.joke()
-        # self.assertTrue(isinstance(s, basestring))
+        klineyes.get_dates_pattern(input_data=load_test_data(), ptypes=['hammer', 'line', 'star'])
