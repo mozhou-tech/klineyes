@@ -7,5 +7,9 @@ from klineyes.common import load_test_data
 
 class TestEyes(TestCase):
 
-    def test_is_string(self):
+    def test_get_dates_pattern(self):
+        '''
+        testing
+        :return:
+        '''
         klineyes.get_dates_pattern(input_data=load_test_data(), ptypes=['hammer', 'line', 'star'])

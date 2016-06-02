@@ -1,13 +1,14 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import pandas as pd
-from klineyes.common import data_validator, load_test_data
-from klineyes.classifier import single
+from .common import data_validator
+from .classifier import single
 
 '''
 主要模块
 '''
 ret_func = lambda x: None if x.empty else x.set_index('tradeDate')
+
 
 def get_dates_by_pattern(input_data, pattern):
     '''
@@ -33,6 +34,3 @@ def get_dates_pattern(input_data, ptypes = None):
         if feature is not None:
             ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
     return ret_func(pd.DataFrame(ret_dict))
-
-if __name__ == '__main__':
-    print(get_dates_pattern(input_data=load_test_data(), ptypes=['hammer', 'line', 'star']))
