@@ -22,7 +22,7 @@ def get_dates_by_pattern(input_data, pattern):
             print row.tradeDate +' '+ feature
 
 
-def get_dates_pattern(input_data):
+def get_dates_pattern(input_data, ptypes=None):
     '''
     获取某些日期的特征图形
     :param input_data:
@@ -32,10 +32,10 @@ def get_dates_pattern(input_data):
     df = data_validator(input_data)
     ret_dict = []
     for i, row in df.iterrows():
-        feature = classifier.single.classifier_single_date(row)
+        feature = classifier.single.classifier_single_date(row, ptypes=ptypes)
         if feature is not None:
             ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
     return ret_func(pd.DataFrame(ret_dict))
 
 if __name__ == '__main__':
-    print get_dates_pattern(input_data=load_test_data())
+    print get_dates_pattern(input_data=load_test_data(), ptypes=['line'])

@@ -14,7 +14,7 @@ def basic_judge(x):
 
 def data_preprocessing(x):
     if x['entity_height'] is None:
-        x['entity_height'] = 0
+        x['entity_height'] = 0.0
     return x
 
 hammer = {

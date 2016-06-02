@@ -15,6 +15,7 @@ def basic_judge(x):
 def data_preprocessing(x):
     pass
 
+
 star = {
     'basic_judge': {
         'expression': basic_judge,
@@ -27,39 +28,52 @@ star = {
             'name_zh': '十字星',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] >= 0.4 and x['bottom_height'] >= 0.4 and x[ 'entity_height'] <= 0.02 else False,
+            'expression': lambda x: True if x['top_height'] >= 0.4 and
+                                            x['bottom_height'] >= 0.4 and
+                                            x['entity_height'] <= 0.02 else False,
         },
         't': {
             'name_zh': 'T字星',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] < 0.05 and x['bottom_height'] > 0.3 and x['entity_height'] < 0.02 else False
+            'expression': lambda x: True if x['top_height'] < 0.05 and
+                                            x['bottom_height'] > 0.3 and
+                                            x['entity_height'] < 0.02 else False
         },
         'reverse_t': {
             'name_zh': '坟墓十字星',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] > 0.3 and x['bottom_height'] < 0.03 and x['entity_height'] < 0.02 else False
+            'expression': lambda x: True if x['top_height'] > 0.3 and
+                                            x['bottom_height'] < 0.03 and
+                                            x['entity_height'] < 0.02 else False
         },
         'long': {
-            'name_zh': '长十字星',
+            'name_zh': '',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] >= 0.4 and x['bottom_height'] >= 0.4 and x[ 'entity_height'] <= 0.08 and
+            'expression': lambda x: True if x['top_height'] >= 0.4 and
+                                            x['bottom_height'] >= 0.4 and
+                                            x['entity_height'] <= 0.08 and
                                             x['pct_amplitude'] >= 0.03 else False
         },
         'shooting': {
-            'name_zh': '射击十字星',
-            'feature': '',
-            'url': '',
-            'expression': lambda x: True if x['top_height'] > 0.5 and x['bottom_height'] >= 0.1 and x['entity_height'] >= 0.1 and
+            'name_zh': '',
+            'feature': '大概率反转',
+            'url': 'http://wiki.mbalib.com/wiki/%E6%B5%81%E6%98%9F%E7%BA%BF',
+            'expression': lambda x: True if x['bottom_height'] >= 0.1 and
+                                            x['entity_height'] <= 0.18 and
+                                            x['top_height'] >= x['entity_height'] * 2 and
+                                            abs(x['jump_height']) > 0.1 and
                                             x['pct_amplitude'] >= 0.03 else False
         },
         'yi': {
             'name_zh': '',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] == 0.0 and x['bottom_height'] == 0.0 and x['entity_height'] <= 0.01 else False
+            'expression': lambda x: True if x['top_height'] == 0.0 and
+                                             x['bottom_height'] == 0.0 and
+                                             x['entity_height'] <= 0.01 else False
         }
     }
 

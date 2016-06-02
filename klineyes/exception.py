@@ -7,3 +7,4 @@ class ValidatorError(Exception):
     数据验证，异常处理
     '''
     pass
+
