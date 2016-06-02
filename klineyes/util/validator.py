@@ -3,14 +3,11 @@
 import os
 import pandas as pd
 import numpy as np
-from .exception import ValidatorError
+from klineyes.exception import ValidatorError
 
 '''
 共用函数工具包
 '''
-
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))   # project root path
-
 
 def data_validator(input_data):
     '''
@@ -34,10 +31,3 @@ def data_validator(input_data):
         raise ValidatorError('unsupported dtype.')
 
 
-def load_test_data(ticker='000001'):
-    '''
-    Load test test_data for develop
-    :param ticker:
-    :return: 	ticker	tradeDate	turnoverVol	closePrice	highestPrice	lowestPrice	openPrice
-    '''
-    return pd.read_csv(BASE_DIR+'/tests/test_data/'+ticker+'.csv', dtype={"ticker": np.str}, index_col=0)

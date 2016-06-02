@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import pandas as pd
-from .common import data_validator
+
+from .util.validator import data_validator
 from .classifier import single
 
 '''

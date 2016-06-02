@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 
-def classifier_single_date(data, ptypes=['star','hammer','line']):
+def classifier_single_date(data, ptypes=['star', 'hammer', 'line']):
     '''
     获取某一天的形态
     :param ptypes: 要获取的蜡烛线特征类型

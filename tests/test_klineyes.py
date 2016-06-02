@@ -1,8 +1,7 @@
 from unittest import TestCase
 
 import klineyes
-
-from klineyes.common import load_test_data
+from klineyes.util.test_data import load_test_data
 
 
 class TestEyes(TestCase):
