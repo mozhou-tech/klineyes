@@ -36,22 +36,24 @@ star = {
             'name_zh': 'T字星',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] < 0.05 and
+            'expression': lambda x: True if x['top_height'] == 0.0 and
                                             x['bottom_height'] > 0.3 and
-                                            x['entity_height'] < 0.02 else False
+                                            x['entity_height'] < 0.02 and
+                                            x['pct_amplitude'] >= 0.01 else False
         },
         'reverse_t': {
-            'name_zh': '坟墓十字星',
+            'name_zh': '坟墓T字星',
             'feature': '',
             'url': '',
             'expression': lambda x: True if x['top_height'] > 0.3 and
-                                            x['bottom_height'] < 0.03 and
-                                            x['entity_height'] < 0.02 else False
+                                            x['bottom_height'] == 0.0 and
+                                            x['entity_height'] < 0.02 and
+                                            x['pct_amplitude'] >= 0.01 else False
         },
         'long': {
             'name_zh': '长十字星',
-            'feature': '',
-            'url': '',
+            'feature': '趋势的循环高点出现，见顶信号。趋势的循环低点出现，见底信号。上升趋势之末端出现，见顶信号。下跌趋势之末端出现，见底信号。',
+            'url': 'http://wiki.mbalib.com/wiki/%E9%95%BF%E5%8D%81%E5%AD%97%E7%BA%BF',
             'expression': lambda x: True if x['top_height'] >= 0.4 and
                                             x['bottom_height'] >= 0.4 and
                                             x['entity_height'] <= 0.08 and

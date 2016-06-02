@@ -24,14 +24,22 @@ hammer = {
     },
     'flow': {
         'hammer': {
-            "expression": lambda x: True if x['top_height'] < 0.1 and
+            'name_zh': '锤子线',
+            'feature': '',
+            'url': '',
+            "expression": lambda x: True if x['top_height'] < 0.05 and
                                             x['bottom_height'] >= x['entity_height'] * 2 and
-                                            x['pct_amplitude'] >= 0.03 else False
+                                            x['pct_amplitude'] >= 0.025 and
+                                            x['pct_change'] >= 0.006 else False
         },
         'hanging': {
-            "expression": lambda x: True if x['bottom_height'] < 0.1 and
+            'name_zh': '上吊线',
+            'feature': '',
+            'url': '',
+            "expression": lambda x: True if x['bottom_height'] < 0.05 and
                                             x['bottom_height'] >= x['entity_height'] * 2 and
-                                            x['pct_amplitude'] >= 0.03 else False
+                                            x['pct_amplitude'] >= 0.025 and
+                                            x['pct_change'] >= 0.006 else False
         }
     }
 
