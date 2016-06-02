@@ -22,7 +22,7 @@ hammer = {
         'expression': basic_judge,
     },
     'data_preprocessing': {
-        'callback': data_preprocessing
+        'callback': None
     },
     'flow': {
         'hammer': {

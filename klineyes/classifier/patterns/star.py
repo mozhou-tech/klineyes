@@ -49,7 +49,7 @@ star = {
                                             x['entity_height'] < 0.02 else False
         },
         'long': {
-            'name_zh': '',
+            'name_zh': '长十字星',
             'feature': '',
             'url': '',
             'expression': lambda x: True if x['top_height'] >= 0.4 and
@@ -58,8 +58,8 @@ star = {
                                             x['pct_amplitude'] >= 0.03 else False
         },
         'shooting': {
-            'name_zh': '',
-            'feature': '大概率反转',
+            'name_zh': '射击之星',
+            'feature': '射击之星形态如果在高位出现，行情下跌的可能性较大。',
             'url': 'http://wiki.mbalib.com/wiki/%E6%B5%81%E6%98%9F%E7%BA%BF',
             'expression': lambda x: True if x['bottom_height'] >= 0.1 and
                                             x['entity_height'] <= 0.18 and

@@ -75,7 +75,7 @@ line = {
         'barehead_positive': {
             'name_zh': '光头阳线',
             'feature': '',
-            'url': 'http://wiki.mbalib.com/wiki/%E5%85%89%E8%84%9A%E9%98%B3%E7%BA%BF',
+            'url': '',
             'expression': lambda x: True if x['bottom_height'] >= 0.15 and
                                             x['top_height'] == 0.0 and
                                             x['pct_change'] >= 0.02 and
