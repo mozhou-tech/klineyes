@@ -28,7 +28,6 @@ def get_candlestick_feature(data):
     calc_rate = lambda relative_height, height : 0.0 if relative_height is None or height == 0.0 or height is None \
         or relative_height == 0.0 else relative_height / height     # 计算影线占实体的比例
     height = abs(data.highestPrice - data.lowestPrice)   # 蜡烛图长度,包括上下影线
-    # print calc_rate(abs(data.closePrice-data.openPrice), data.preClosePrice)
     return {
         'jump_height': calc_rate(data.openPrice - data.preClosePrice, height),
         'top_height': calc_rate(negtive_filter(data.highestPrice - max(data.openPrice, data.closePrice)), height),

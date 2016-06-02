@@ -13,8 +13,6 @@ def basic_judge(x):
 
 
 def data_preprocessing(x):
-    if x['entity_height'] is None:
-        x['entity_height'] = 0.0
     return x
 
 hammer = {
@@ -26,10 +24,14 @@ hammer = {
     },
     'flow': {
         'hammer': {
-            "expression": lambda x: True if x['top_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and x['pct_amplitude'] >= 0.02 else False
+            "expression": lambda x: True if x['top_height'] < 0.1 and
+                                            x['bottom_height'] >= x['entity_height'] * 2 and
+                                            x['pct_amplitude'] >= 0.03 else False
         },
         'hanging': {
-            "expression": lambda x: True if x['bottom_height'] < 0.1 and x['bottom_height'] > x['entity_height'] * 2 and x['pct_amplitude'] >= 0.02 else False
+            "expression": lambda x: True if x['bottom_height'] < 0.1 and
+                                            x['bottom_height'] >= x['entity_height'] * 2 and
+                                            x['pct_amplitude'] >= 0.03 else False
         }
     }
 
