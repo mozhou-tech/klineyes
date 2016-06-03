@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-from klineyes.classifier.patterns.base import classifier_base
+from klineyes.classifier.patterns.candlestick.base import classifier_base
 
 
 def basic_judge(x):
