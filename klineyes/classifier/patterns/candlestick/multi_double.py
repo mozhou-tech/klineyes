@@ -108,7 +108,7 @@ double = {
         },
         'preg_normal_star': {
             'name_zh': '十字胎',
-            'feature':'十字胎的判别方法和身怀六甲一样，即出现十字胎时，后市有机会转向，其转向讯号比身怀六甲强烈。',
+            'feature': '十字胎的判别方法和身怀六甲一样，即出现十字胎时，后市有机会转向，其转向讯号比身怀六甲强烈。',
             'url': 'http://wiki.mbalib.com/wiki/%E5%8D%81%E5%AD%97%E8%83%8E',
             'expression': lambda x: True if x[1]['bottom_height'] > 0.3 and
                                                 x[1]['top_height'] > 0.3 and
