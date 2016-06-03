@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from __future__ import division
-from klineyes.classifier.patterns import classifier_dict
+from klineyes.classifier.patterns import classifier_single_dict
 import pandas as pd
 import numpy as np
 
@@ -15,7 +15,7 @@ def classifier_single_date(data, ptypes=['star', 'hammer', 'line']):
     '''
     candle_quant = get_candlestick_feature(data)
     for ptype in ptypes:
-        features = classifier_dict[ptype](candle_quant)
+        features = classifier_single_dict[ptype](candle_quant)
         if features is not None:
             return features
 
@@ -37,5 +37,9 @@ def get_candlestick_feature(data):
         'entity_height': calc_rate(abs(data.closePrice-data.openPrice), height),
         'pct_change': calc_rate(abs(data.closePrice-data.openPrice), data.preClosePrice),
         'pct_amplitude': calc_rate(abs(data.highestPrice-data.lowestPrice), data.preClosePrice),
-        'positive': True if((data.closePrice - data.openPrice) > 0) else False   # True=阳  False=阴
+        'positive': True if((data.closePrice - data.openPrice) > 0) else False,   # True=阳  False=阴
+        'open_price': data.openPrice,
+        'close_price': data.closePrice,
+        'highest_price': data.highestPrice,
+        'lowest_price': data.lowestPrice
     }
