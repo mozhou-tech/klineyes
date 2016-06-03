@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 from klineyes.classifier.patterns.candlestick.base import classifier_base
 
+
 def basic_judge(x):
     '''
     对输入数据进行基础分类

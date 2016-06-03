@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+bg_amp = 0.03
+
 
 def classifier_base(candle_quant, pattern_lib, ptype):
     '''
