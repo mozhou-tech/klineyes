@@ -97,7 +97,7 @@ double = {
         },
         'dip_needle': {
             'name_zh': '双针探底',
-            'feature': '可能意味着后期较强的走势',
+            'feature': '“双针探底”形态出现后，股价一般是立即反弹，走出一波气势不凡的上涨行情。',
             'url': "http://wiki.mbalib.com/wiki/%E5%8F%8C%E9%92%88%E6%8E%A2%E5%BA%95",
             'expression': lambda x: True if ((abs(x[0]['lowest_price'] / x[0]['lowest_price'] - x[1]['lowest_price'] / x[0]['lowest_price']))) < 0.001 and
                                                 x[0]['bottom_height'] >= 0.5 and
