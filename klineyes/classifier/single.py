@@ -41,5 +41,6 @@ def get_candlestick_feature(data):
         'open_price': data.openPrice,
         'close_price': data.closePrice,
         'highest_price': data.highestPrice,
-        'lowest_price': data.lowestPrice
+        'lowest_price': data.lowestPrice,
+        'turnover_val': data.turnoverVol
     }
