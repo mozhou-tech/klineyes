@@ -32,11 +32,14 @@ triple = {
     },
 
     'flow': {
-        'dark_cloud_cover': {
-            'name_zh': '弃婴',
-            'feature': '乌云盖顶是由两支不同颜色及处于图表顶部的阴阳烛组成，属于一种见顶回落的转向形态，通常在一个上升趋势后出现。',
-            'url': 'http://wiki.mbalib.com/wiki/%E4%B9%8C%E4%BA%91%E7%9B%96%E9%A1%B6',
-            'expression':  False,
+        'morning_star': {
+            'name_zh': '启明星',
+            'feature': '一种行情见底转势的形态。这种形态如果出现在下降趋势中应引起注意，因为此时趋势已发出比较明确的反转信号，是一个非常好的买入时机。',
+            'url': 'http://wiki.mbalib.com/wiki/%E5%90%AF%E6%98%8E%E6%98%9F',
+            'expression': lambda x: True if x[0]['pct_change'] >= 0.02 and x[0]['positive'] is not True and
+                                            x[2]['close_price'] > x[0]['close_price'] >= max(x[1]['open_price'], x[1]['close_price']) and
+                                             x[2]['positive'] is True
+                                            else False,
         }
     }
 }
@@ -49,5 +52,5 @@ def classifier(candle_quant):
     :param data:
     :return:
     '''
-    if len(candle_quant)>= 2:
+    if len(candle_quant) == 3:
         return classifier_base(candle_quant, triple, 'multi_triple')

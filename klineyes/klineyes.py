@@ -47,8 +47,24 @@ def get_dates_pattern2(input_data, ptypes = None):
     '''
     df = data_validator(input_data)
     ret_dict = []
-    for i, row in df.iterrows():
-        feature = multi.classifier_multi_date(df[i:i + 2])
+    for i, row in df[::-1].iterrows():
+        feature = multi.classifier_multi_date(df[i-2:i])
+        if feature is not None:
+            ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
+    return ret_func(pd.DataFrame(ret_dict))
+
+
+def get_dates_pattern3(input_data, ptypes = None):
+    '''
+    获取某些日期的特征图形,每个交易日单独判断(2日到多日形态)
+    :param input_data: DataFrame
+    :param ptypes: pattern 类型 ['hammer', 'line', 'star']
+    :return:
+    '''
+    df = data_validator(input_data)
+    ret_dict = []
+    for i, row in df[::-1].iterrows():
+        feature = multi.classifier_multi_date(df[i-3:i])
         if feature is not None:
             ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
     return ret_func(pd.DataFrame(ret_dict))

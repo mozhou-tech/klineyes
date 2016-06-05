@@ -128,5 +128,5 @@ def classifier(candle_quant):
     :param data:
     :return:
     '''
-    if len(candle_quant)>= 2:
+    if len(candle_quant) == 2:
         return classifier_base(candle_quant, double, 'multi_double')

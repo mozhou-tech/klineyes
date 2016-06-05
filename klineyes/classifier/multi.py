@@ -4,7 +4,7 @@
 from klineyes.classifier.patterns import classifier_multi_dict
 from klineyes.classifier.single import get_candlestick_feature
 
-def classifier_multi_date(data, ptypes=['multi_double']):
+def classifier_multi_date(data, ptypes=['multi_triple']):
     '''
     获取某一天的形态
     :param ptypes: 要获取的蜡烛线特征类型
@@ -19,6 +19,11 @@ def classifier_multi_date(data, ptypes=['multi_double']):
 
 
 def get_multi_feature(df):
+    '''
+    从single模块中获取蜡烛图特征数据
+    :param df:
+    :return:
+    '''
     features = []
 
     for i, row in df.iterrows():
