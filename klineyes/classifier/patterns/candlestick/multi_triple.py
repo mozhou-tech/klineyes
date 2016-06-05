@@ -37,10 +37,19 @@ triple = {
             'feature': '一种行情见底转势的形态。这种形态如果出现在下降趋势中应引起注意，因为此时趋势已发出比较明确的反转信号，是一个非常好的买入时机。',
             'url': 'http://wiki.mbalib.com/wiki/%E5%90%AF%E6%98%8E%E6%98%9F',
             'expression': lambda x: True if x[0]['pct_change'] >= 0.02 and x[0]['positive'] is not True and
-                                            x[1]['pct_change'] >= 0.01 and
-                                            x[0]['close_price'] >= max(x[1]['open_price'], x[1]['close_price']) and
+                                            x[0]['close_price'] > max(x[1]['open_price'], x[1]['close_price']) and
                                             x[2]['positive'] is True and
-                                            x[2]['close_price'] >= x[0]['close_price'] + (x[0]['open_price']-x[0]['close_price']) * 0.5
+                                            x[2]['close_price'] >= (x[0]['close_price'] + (x[0]['open_price']-x[0]['close_price']) * 0.5)
+                                            else False,
+        },
+        'evening_star': {
+            'name_zh': '黄昏星',
+            'feature': '较强烈的上升趋势中出现反转的信号。',
+            'url': 'http://wiki.mbalib.com/wiki/%E9%BB%84%E6%98%8F%E6%98%9F',
+            'expression': lambda x: True if x[0]['positive'] is True and x[2]['positive'] is False and
+                                            x[0]['pct_change'] >= 0.02 and
+                                            x[0]['close_price'] < min(x[1]['open_price'], x[1]['close_price']) and
+                                            x[2]['close_price'] <= (x[0]['open_price'] + (x[0]['close_price']-x[0]['open_price']) * 0.5)
                                             else False,
         }
     }
