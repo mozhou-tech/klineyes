@@ -69,7 +69,21 @@ fivefold = {
                                              x[0]['open_price'] < x[2]['close_price'] < x[0]['close_price'] and
                                              x[0]['open_price'] < x[3]['open_price'] < x[0]['close_price'] and
                                              x[0]['open_price'] < x[3]['close_price'] < x[0]['close_price'] and
-                                             x[4]['pct_change'] >= 0.01
+                                             x[0]['pct_change'] >= 0.04 and x[4]['pct_change'] >= 0.03
+                                             else False,
+        },
+         'falling_three_method': {
+            'name_zh': '下降三法',
+            'feature': '',
+            'url': '',
+            'expression': lambda x: True if x[0]['positive'] is False and x[4]['positive'] is False and
+                                             x[0]['open_price'] > x[1]['open_price'] > x[0]['close_price'] and
+                                             x[0]['open_price'] > x[1]['close_price'] > x[0]['close_price'] and
+                                             x[0]['open_price'] > x[2]['open_price'] > x[0]['close_price'] and
+                                             x[0]['open_price'] > x[2]['close_price'] > x[0]['close_price'] and
+                                             x[0]['open_price'] > x[3]['open_price'] > x[0]['close_price'] and
+                                             x[0]['open_price'] > x[3]['close_price'] > x[0]['close_price'] and
+                                             x[4]['pct_change'] >= 0.02
                                              else False,
         },
         'dip_needle': {
