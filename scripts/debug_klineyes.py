@@ -1,10 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from klineyes import get_dates_pattern3
+from klineyes import get_dates_pattern
 from klineyes.util.test_data import load_test_data
 
-print get_dates_pattern3(load_test_data('000001'), ptypes=['hammer', 'line', 'star'])
-# print get_dates_pattern2(load_test_data('000001'), ptypes=['hammer', 'line', 'star'])
-# print get_dates_pattern(load_test_data('000001'), ptypes=['hammer', 'line', 'star'])
+res = get_dates_pattern(load_test_data('000001'), ptypes={"single": ['hammer', 'line', 'star'], 'multi': ['multi_double']})
+print res
 

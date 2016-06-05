@@ -89,4 +89,5 @@ def classifier(candle_quant):
     :param data:
     :return:
     '''
-    return classifier_base(candle_quant, star, 'star')
+    if candle_quant is not None:
+        return classifier_base(candle_quant, star, 'star')

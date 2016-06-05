@@ -119,4 +119,5 @@ def classifier(candle_quant):
     :param data:
     :return:
     '''
-    return classifier_base(candle_quant, line, 'line')
+    if candle_quant is not None:
+        return classifier_base(candle_quant, line, 'line')

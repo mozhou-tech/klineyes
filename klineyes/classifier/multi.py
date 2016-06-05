@@ -4,18 +4,21 @@
 from klineyes.classifier.patterns import classifier_dict
 from klineyes.classifier.single import get_candlestick_feature
 
-def classifier_multi_date(data, ptypes=['multi_fivefold']):
+def classifier_multi_date(data, ptype):
     '''
     获取某一天的形态
     :param ptypes: 要获取的蜡烛线特征类型
     :param data:
     :return:
     '''
-    candle_quant = get_multi_feature(data)
-    for ptype in ptypes:
+    if data is not None:
+        candle_quant = get_multi_feature(data)
+
         features = classifier_dict[ptype](candle_quant)
         if features is not None:
             return features
+    else:
+        Exception('classifier_multi_date func get None data')
 
 
 def get_multi_feature(df):

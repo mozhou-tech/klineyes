@@ -2,8 +2,6 @@
 # -*- coding: UTF-8 -*-
 from __future__ import division
 from klineyes.classifier.patterns import classifier_dict
-import pandas as pd
-import numpy as np
 
 
 def classifier_single_date(data, ptypes=['star', 'hammer', 'line']):
