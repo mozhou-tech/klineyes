@@ -51,6 +51,28 @@ triple = {
                                             x[0]['close_price'] < min(x[1]['open_price'], x[1]['close_price']) and
                                             x[2]['close_price'] <= (x[0]['open_price'] + (x[0]['close_price']-x[0]['open_price']) * 0.5)
                                             else False,
+        },
+        'three_crows': {
+            'name_zh': '三只乌鸦',
+            'feature': '三根向下的阴线持续下跌，后市看淡。',
+            'url': 'http://wiki.mbalib.com/wiki/%E4%B8%89%E5%8F%AA%E4%B9%8C%E9%B8%A6',
+            'expression': lambda x: True if x[0]['positive'] is False and x[1]['positive'] is False and x[2]['positive'] is False and
+                                            x[0]['lowest_price'] > x[1]['close_price'] and
+                                            x[1]['lowest_price'] > x[2]['close_price'] and
+                                            x[0]['close_price'] <= x[1]['open_price'] <= x[0]['open_price'] and
+                                            x[1]['close_price'] <= x[2]['open_price'] <= x[1]['open_price'] and
+                                            x[0]['bottom_height'] < 0.3 and x[1]['bottom_height'] < 0.3 and
+                                            x[2]['bottom_height'] < 0.1
+                                            else False,
+        },
+        'red_soldier': {
+            'name_zh': '红三兵',
+            'feature': '出现在底部或横盘，突破压力位配合成交量放大酝酿一波行情，止损在下方支撑位。',
+            'url': 'http://wiki.mbalib.com/wiki/%E7%BA%A2%E4%B8%89%E5%85%B5',
+            'expression': lambda x: True if x[0]['positive'] is True and x[1]['positive'] is True and x[2]['positive'] is True and
+                                           x[0]['pct_change'] > 0.003 and x[1]['pct_change'] > 0.003 and x[2]['pct_change'] > 0.003 and
+                                           x[0]['top_height'] < 0.2 and x[1]['top_height'] < 0.25 and x[2]['top_height'] < 0.3
+                                           else False,
         }
     }
 }
