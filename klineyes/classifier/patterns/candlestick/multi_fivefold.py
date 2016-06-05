@@ -60,7 +60,7 @@ fivefold = {
     'flow': {
         'rising_three_method': {
             'name_zh': '上升三法',
-            'feature': '多方在蓄积力量，饲机上攻。',
+            'feature': '多方在蓄积力量，饲机上攻。不过似乎没有下降三法准确。',
             'url': '',
             'expression': lambda x: True if x[0]['positive'] is True and x[4]['positive'] is True and
                                              x[0]['open_price'] < x[1]['open_price'] < x[0]['close_price'] and
