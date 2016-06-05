@@ -23,6 +23,14 @@ line = {
         'callback': None
     },
     'flow': {
+        'star_line': {
+            'name_zh': '星线',
+            'feature': '出现星线，说明当前的趋势不长久了',
+            'url': '',
+            'expression': lambda x: True if x['top_height'] >= 0.3 and
+                                            x['bottom_height'] >= 0.3 and
+                                            x['entity_height'] > 0.15 else False,
+        },
 
         'bare_positive': {
             'name_zh': '光头光脚阳线',

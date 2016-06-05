@@ -45,7 +45,7 @@ double = {
                                             else False,
         },
         'dawn': {
-            'name_zh': '曙光初现',
+            'name_zh': '曙光初现（刺透/斩回线）',
             'feature': '',
             'url': 'http://wiki.mbalib.com/wiki/%E6%9B%99%E5%85%89%E5%88%9D%E7%8E%B0',
             'expression': lambda x: True if not x[0]['positive'] and x[1]['positive'] and
@@ -56,7 +56,7 @@ double = {
                                                 else False,
         },
         'positive_hold_negetive': {
-            'name_zh': '阳抱阴',
+            'name_zh': '阳抱阴（吞没）',
             'feature': '',
             'url': 'http://wiki.mbalib.com/wiki/%E9%98%B3%E5%8C%85%E9%98%B4',
             'expression': lambda x: True if not x[0]['positive'] and x[1]['positive'] and
@@ -66,7 +66,7 @@ double = {
                                                 else False,
         },
         'negetive_hold_positive': {
-            'name_zh': '阴抱阳',
+            'name_zh': '阴抱阳（吞没）',
             'feature': '',
             'url': 'http://wiki.mbalib.com/wiki/%E9%98%B4%E5%8C%85%E9%98%B3',
             'expression': lambda x: True if x[0]['positive'] and not x[1]['positive'] and

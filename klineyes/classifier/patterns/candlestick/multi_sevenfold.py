@@ -13,16 +13,11 @@ def basic_judge(x):
 
 
 def data_preprocessing(x):
-    if x[0]['turnover_val'] == 0.0:
-        x[0]['turnover_val'] = 1
-    if x[1]['turnover_val'] == 0.0:
-        x[1]['turnover_val'] = 1
-    if x[0]['lowest_price'] == 0.0:
-        x[0]['lowest_price'] =1
+
     return x
 
 
-triple = {
+sevenfold = {
       'basic_judge': {
         'expression': basic_judge,
     },
@@ -32,11 +27,17 @@ triple = {
     },
 
     'flow': {
-        'dark_cloud_cover': {
-            'name_zh': '弃婴',
-            'feature': '乌云盖顶是由两支不同颜色及处于图表顶部的阴阳烛组成，属于一种见顶回落的转向形态，通常在一个上升趋势后出现。',
+        'dip_needle': {
+            'name_zh': '双针探底',
+            'feature': '双针探底',
             'url': 'http://wiki.mbalib.com/wiki/%E4%B9%8C%E4%BA%91%E7%9B%96%E9%A1%B6',
-            'expression':  False,
+            'expression': None,
+        },
+         'normal_star_chain': {
+            'name_zh': '连续十字星',
+            'feature': '双针探底',
+            'url': 'http://wiki.mbalib.com/wiki/%E8%BF%9E%E7%BB%AD%E5%8D%81%E5%AD%97%E6%98%9F',
+            'expression': None,
         }
     }
 }
@@ -50,4 +51,4 @@ def classifier(candle_quant):
     :return:
     '''
     if len(candle_quant)>= 2:
-        return classifier_base(candle_quant, triple, 'multi_triple')
+        return classifier_base(candle_quant, sevenfold, 'multi_sevenfold')
