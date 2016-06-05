@@ -64,7 +64,7 @@ def get_dates_pattern3(input_data, ptypes = None):
     df = data_validator(input_data)
     ret_dict = []
     for i, row in df[::-1].iterrows():
-        feature = multi.classifier_multi_date(df[i-2:i+1])
+        feature = multi.classifier_multi_date(df[i-4:i+1])
         if feature is not None:
             ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
     return ret_func(pd.DataFrame(ret_dict))

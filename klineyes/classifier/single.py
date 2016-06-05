@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from __future__ import division
-from klineyes.classifier.patterns import classifier_single_dict
+from klineyes.classifier.patterns import classifier_dict
 import pandas as pd
 import numpy as np
 
@@ -15,7 +15,7 @@ def classifier_single_date(data, ptypes=['star', 'hammer', 'line']):
     '''
     candle_quant = get_candlestick_feature(data)
     for ptype in ptypes:
-        features = classifier_single_dict[ptype](candle_quant)
+        features = classifier_dict[ptype](candle_quant)
         if features is not None:
             return features
 

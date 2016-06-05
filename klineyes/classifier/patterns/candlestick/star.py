@@ -28,9 +28,9 @@ star = {
             'name_zh': '十字星',
             'feature': '',
             'url': '',
-            'expression': lambda x: True if x['top_height'] >= 0.4 and
-                                            x['bottom_height'] >= 0.4 and
-                                            x['entity_height'] <= 0.02 else False,
+            'expression': lambda x: True if x['top_height'] >= 0.3 and
+                                            x['bottom_height'] >= 0.3 and
+                                            x['entity_height'] <= 0.05 else False,
         },
         't': {
             'name_zh': 'T字星',
