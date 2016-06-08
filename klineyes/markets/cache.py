@@ -4,46 +4,125 @@
 from klineyes.util.common import BASE_DIR
 import tushare as ts
 import datetime as dt
-
+import os.path
+from dateutil.relativedelta import relativedelta
+from time import sleep
+import pandas as pd
 
 class Cache:
 
     def __init__(self):
         pass
 
-    def _get_cache_file_name(self, code, ktype, date):
-        pass
+    @classmethod
+    def _get_date_range_of_month(self, date, dtype='str'):
+        '''
+        获取某个日期所在月的开始日期和结束日期
+        :param date: 日期
+        :param dtype: 返回数据类型，str  or  datetime
+        :return:
+        '''
+        one_day = dt.timedelta(days=1)
+        month_start = dt.datetime.strptime(date[:7], '%Y-%m')
+        month_end = (month_start + relativedelta(months=1)) - one_day
+        if dtype == 'str':
+            return month_start.strftime('%Y-%m-%d'), month_end.strftime('%Y-%m-%d')
+        elif dtype == 'datetime':
+            return month_start, month_end
 
-    def _get_last_cache(self, *args, **kwargs):
-        print kwargs
+    @classmethod
+    def _get_cache_filename(self, code, date, ktype):
+        '''
+        获取缓存文件名称
+        :param code: 股票代码
+        :param date: 日期
+        :param ktype: k线type
+        :return:
+        '''
+        return BASE_DIR + '/cache/' + ktype + '/' + date[:7] + '%' + code + '.csv'
 
-    def _get_earliest_cache(self, code, ktype, date):
-        pass
+    @classmethod
+    def _cache_monthly(self, code, ktype, date):
+        '''
+        缓存date所在月的数据，等缓存成功后返回True
+        :param code:
+        :param ktype:
+        :param date:
+        :return:
+        '''
+        start, end = self._get_date_range_of_month(date, 'str')
+        df = ts.get_hist_data(code=code, ktype=ktype, start=start, end=end, retry_count=6)
+        if df is not None:
+            df.to_csv(self._get_cache_filename(code, date, ktype))
 
-    def is_data_in_cache(self, code, ktype, date):
+        waiting_seconds = 0
+        while not self._in_cache(ktype=ktype, code=code, date=date):
+            sleep(1)
+            waiting_seconds += 1
+            if waiting_seconds > 30:
+                self._cache_monthly(code=code, ktype=ktype, date=date)
+        return True
+
+
+    @classmethod
+    def _in_cache(self, ktype, code, date):
         '''
         判断数据是否在Cache目录
         :param ktype:
         :param date:
         :return:
         '''
-        pass
+        filename = self._get_cache_filename(code=code, date=date, ktype=ktype)
+        return os.path.isfile(filename)
 
-    def _write_data_to_cache(self, code, ktype, month):
-        pass
+    @classmethod
+    def _date_range_to_month_list(self, start, end):
+        '''
+        时间范围转换成月份列表（准备要加载的缓存文件）
+        :param start:
+        :param end:
+        :return:
+        '''
+        processing = dt.datetime.strptime(start, '%Y-%m-%d')   # start date
+        end = dt.datetime.strptime(end, '%Y-%m-%d')
+        month_list = []
+        while processing <= end:
+            month_list.append(processing.strftime('%Y-%m-%d'))
+            processing = processing + relativedelta(months=1)
+        return month_list
 
-    def get_kline_data(self, *args, **kwargs):
-        self._get_last_cache(*args, **kwargs)
-        # one_day = dt.timedelta(days=1)
-        # start = processing = dt.datetime.strptime(kwargs['start'], '%Y-%m-%d')
-        # end = dt.datetime.strptime(kwargs['end'], '%Y-%m-%d')
-        # while processing is None or processing <= end:
-        #     month_str = processing.strftime('%Y-%m')
-        #     save_path = BASE_DIR + '/cache/30/' + month_str + '%' + kwargs['code']+'.csv'
-        #     ts.get_hist_data(code=kwargs['code'], ktype='30', start=month_str + '-01', end=month_str + '-31').to_csv(save_path)
-        #     processing = processing + one_day
-        # return func(*args, **kwargs)
-        return kwargs
+    def _read_from_cache(self, code, ktype, date):
+        '''
+        从缓存中，读取对应类型的数据
+        :param code:
+        :param ktype:
+        :param date:
+        :return:
+        '''
+        return pd.read_csv(self._get_cache_filename(code=code, ktype=ktype, date=date))
+
+    def _is_cache_file_whole(self, *args, **kwargs):
+        print kwargs
+
+    def get_kline_data(self, ktype, code, start, end):
+        months = self._date_range_to_month_list(start, end)
+        ret_df = None
+        for date in months:
+            if self._in_cache(ktype=ktype, code=code, date=date) is not True:   # 缓存里找不到，就从网络获取
+                print 'caching....'
+                self._cache_monthly(code=code, ktype=ktype, date=date)
+            date_df = self._read_from_cache(code=code, ktype=ktype, date=date)
+            if ret_df is None:
+                ret_df = date_df
+            else:
+                ret_df.append(date_df, ignore_index=True)
+        return ret_df
+
+        # if self._in_cache(ktype=ktype, code=code, date=start) is False:
+        #     self._cache_monthly(code=code, ktype=ktype, date=start)
+
+        # self._cache_monthly(code=code, ktype=ktype, date=start)
+
 
 
 def read_cache(func):
@@ -51,7 +130,7 @@ def read_cache(func):
     cache = Cache()
 
     def wrap_function(*args, **kwargs):
-        return cache.get_kline_data(*args, **kwargs)
+        return cache.get_kline_data(ktype=kwargs['ktype'], code=kwargs['code'], start=kwargs['start'], end=kwargs['end'])
         # return func(*args, **kwargs)
 
     return wrap_function
