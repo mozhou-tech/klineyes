@@ -134,9 +134,8 @@ class Cache:
 
 def read_cache(func):
 
-    cache = Cache()
-
     def wrap_function(*args, **kwargs):
+        cache = Cache()
         return cache.get_kline_data(ktype=kwargs['ktype'], code=kwargs['code'], start=kwargs['start'], end=kwargs['end'])
         # return func(*args, **kwargs)
 

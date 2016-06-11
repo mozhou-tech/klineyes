@@ -15,8 +15,15 @@ class KlineData:
         pass
 
     @read_cache
-    def minutes(self, ktype='30', code='600496', start='2016-05-01', end='2016-06-09'):
-        # return ts.get_hist_data(code=code, ktype=period, start=start, end=end)
+    def get_data(self, ktype='30', code='600496', start='2016-05-01', end='2016-06-09'):
+        '''
+        从缓存中读取股票数据
+        :param ktype:
+        :param code:
+        :param start:
+        :param end:
+        :return:
+        '''
         pass
 
 
