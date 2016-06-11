@@ -89,6 +89,7 @@ class Cache:
         while processing <= end:
             month_list.append(processing.strftime('%Y-%m-%d'))
             processing = processing + relativedelta(months=1)
+        month_list.append(processing.strftime('%Y-%m-%d'))
         return month_list
 
     def _read_from_cache(self, code, ktype, date):
@@ -99,10 +100,24 @@ class Cache:
         :param date:
         :return:
         '''
-        return pd.read_csv(self._get_cache_filename(code=code, ktype=ktype, date=date))
+        return pd.read_csv(self._get_cache_filename(code=code, ktype=ktype, date=date), index_col='date')
 
     def _is_cache_file_whole(self, *args, **kwargs):
         print kwargs
+
+    @classmethod
+    def _apply_daterange(self, df, start, end):
+        '''
+        根据传入的dataframe 切分出具体想要的时间范围
+        :param df:
+        :param start:
+        :param end:
+        :return:
+        '''
+
+        start = dt.datetime.strptime(start , '%Y-%m-%d')
+        end = dt.datetime.strptime(end, '%Y-%m-%d')
+        return df.sort_values(by='date')
 
     def get_kline_data(self, ktype, code, start, end):
         months = self._date_range_to_month_list(start, end)
@@ -115,14 +130,8 @@ class Cache:
             if ret_df is None:
                 ret_df = date_df
             else:
-                ret_df.append(date_df, ignore_index=True)
-        return ret_df
-
-        # if self._in_cache(ktype=ktype, code=code, date=start) is False:
-        #     self._cache_monthly(code=code, ktype=ktype, date=start)
-
-        # self._cache_monthly(code=code, ktype=ktype, date=start)
-
+                ret_df = ret_df.append(date_df)
+        return self._apply_daterange(ret_df, start, end)
 
 
 def read_cache(func):
