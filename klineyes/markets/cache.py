@@ -100,7 +100,7 @@ class Cache:
         :param date:
         :return:
         '''
-        return pd.read_csv(self._get_cache_filename(code=code, ktype=ktype, date=date), index_col='date')
+        return pd.read_csv(self._get_cache_filename(code=code, ktype=ktype, date=date))
 
     def _is_cache_file_whole(self, *args, **kwargs):
         print kwargs
@@ -114,10 +114,8 @@ class Cache:
         :param end:
         :return:
         '''
-
-        start = dt.datetime.strptime(start , '%Y-%m-%d')
-        end = dt.datetime.strptime(end, '%Y-%m-%d')
-        return df.sort_values(by='date')
+        df = df.sort_values(by='date')
+        return df[(start <= df.date) & (end >= df.date)].reset_index(drop=True)
 
     def get_kline_data(self, ktype, code, start, end):
         months = self._date_range_to_month_list(start, end)
@@ -130,7 +128,7 @@ class Cache:
             if ret_df is None:
                 ret_df = date_df
             else:
-                ret_df = ret_df.append(date_df)
+                ret_df = ret_df.append(date_df, ignore_index=True)
         return self._apply_daterange(ret_df, start, end)
 
 
