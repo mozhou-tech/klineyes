@@ -12,8 +12,6 @@ from .classifier import multi
 ret_func = lambda x: None if x.empty else x.set_index('tradeDate')
 
 
-
-
 def get_dates_pattern(input_data, ptypes = None):
     '''
     获取某些日期的特征图形,每个交易日单独判断
