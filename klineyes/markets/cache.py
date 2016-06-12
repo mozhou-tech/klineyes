@@ -149,8 +149,11 @@ def read_cache(func):
 
     def wrap_function(*args, **kwargs):
         cache = Cache(ktype=kwargs['ktype'], code=kwargs['code'], start=kwargs['start'], end=kwargs['end'])
-        return cache.get_kline_data()
-        # return func(*args, **kwargs)
+        df = cache.get_kline_data()
+        if kwargs.has_key('indicator'):
+            return func(df, indicator=kwargs['indicator'])
+        else:
+            return func(df)
 
     return wrap_function
 
