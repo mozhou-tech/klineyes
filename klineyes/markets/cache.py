@@ -6,7 +6,7 @@ import tushare as ts
 import datetime as dt
 import os.path
 from dateutil.relativedelta import relativedelta
-from time import sleep
+from time import sleep,ctime,strftime,gmtime
 import pandas as pd
 
 class Cache:
@@ -50,6 +50,7 @@ class Cache:
         :param date:
         :return:
         '''
+        print 'caching...'
         start, end = self._get_date_range_of_month(date, 'str')
         df = ts.get_hist_data(code=self.code, ktype=self.ktype, start=start, end=end, retry_count=6)
         if df is not None:
@@ -77,13 +78,13 @@ class Cache:
         时间范围转换成月份列表（准备要加载的缓存文件）
         :return:
         '''
-        processing = dt.datetime.strptime(self.start, '%Y-%m-%d')   # start date
+        # start date, use bigest day value,for check cache in self._is_cache_file_updated
+        processing = dt.datetime.strptime(self.start[:7] + self.end[7:], '%Y-%m-%d')
         end = dt.datetime.strptime(self.end, '%Y-%m-%d')
         month_list = []
         while processing <= end:
             month_list.append(processing.strftime('%Y-%m-%d'))
             processing = processing + relativedelta(months=1)
-        month_list.append(processing.strftime('%Y-%m-%d'))
         return month_list
 
     def _read_from_cache(self, date):
@@ -94,11 +95,25 @@ class Cache:
         :param date:
         :return:
         '''
+        if self._is_cache_file_updated(date) is False:
+            print 'refresh caching of month '+ date[:7]
+            self._cache_monthly(date)
         return pd.read_csv(self._get_cache_filename(date=date))
 
 
-    def _is_cache_file_whole(self, *args, **kwargs):
-        print kwargs
+    def _is_cache_file_updated(self, date):
+        '''
+        判断缓存文件是不是最新的，如果不是的话要刷新
+        :param date:
+        :return:
+        '''
+        cache_date = dt.datetime.strptime(strftime('%Y-%m-%d', gmtime(os.path.getmtime(self._get_cache_filename(date)))), '%Y-%m-%d')
+        date = dt.datetime.strptime(date, '%Y-%m-%d')
+        # 如果当天更新过，就返回是最新的，否则下载日期大于索取的数据的日期的就是最新的
+        if cache_date == dt.datetime.strptime(strftime('%Y-%m-%d'), '%Y-%m-%d'):
+            return True
+        return date < cache_date
+
 
     def _apply_daterange(self, df):
         '''
