@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import tushare as ts
-from klineyes.markets.cache import read_cache
-import talib as ta
 import pandas as pd
+import talib as ta
+
+from klineyes.markets.cache import read_cache
+from klineyes.markets.stocks.pattern_tool import line_intersections
 
 '''
 A tushare wrapper
@@ -30,13 +31,15 @@ class KlineData:
 
     @read_cache
     def get_indicator(df, indicator):
-        ret_df = df.ix[:, :'price_change']
+        ret_df = df
         if 'MACD' in indicator:
             macd, macdsignal, macdhist = ta.MACD(df.close.values, fastperiod=12, slowperiod=26, signalperiod=9)
             ret_df = KlineData._merge_dataframe(pd.DataFrame([macd, macdsignal, macdhist]).T.rename(columns={0: "macd", 1: "macdsignal", 2: "macdhist"}), ret_df)
+            ret_df = KlineData._merge_dataframe(line_intersections(ret_df, columns=['macd', 'macdsignal']), ret_df)
         if 'MFI' in indicator:
             real = ta.MFI(df.high.values, df.low.values, df.close.values, df.volume.values, timeperiod=14)
             ret_df = KlineData._merge_dataframe(pd.DataFrame([real]).T.rename(columns={0: "mfi"}), ret_df)
+
         return ret_df
 
     @staticmethod
