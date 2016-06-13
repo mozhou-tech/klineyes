@@ -13,8 +13,17 @@ df = kline_data.get_indicator(ktype='30', code='300181', start='2016-04-01', end
 # print df[df.macdhist == df[df.macd_shape == 'golden'].macdhist.min()]
 golden = df[df.macd_shape == 'golden']
 death = df[df.macd_shape == 'death']
-touch_zero = df[df.macd_shape == 'dec_touch_zero']
+inc_touch_zero = df[df.macd_shape == 'inc_touch_zero']
+negative_macd_median = df[df.macddif < 0.].macddif.median()   # macd 的中位数
+positive_macd_median = df[df.macddif > 0.].macddif.median()   # macd 的中位数
 
+for i, row in golden.iterrows():
+    if row.macddif < negative_macd_median:
+        print 'negative'
+        print row.date
+    elif row.macddif > positive_macd_median:
+        print 'positive' + str(row.macddif)
+        print row.date
 
 
 
@@ -42,7 +51,7 @@ def show_plot():
     indicator.plot(df['date'], df['macdsignal'], c='pink')
     indicator.plot(df['date'], df['macd'], c='yellowgreen')
     indicator.plot(df['date'], [0.]*len(df['date']), c='gray')
-    # indicator.plot(df['date'], df['macdhist'])
+    # indicator.bar(df['date'],df['macdhist'])#df['macdhist']
     # 划MACD交点
     area = np.pi * 5  # 0 to 15 point radiuses
     indicator.scatter(golden['date'].values, golden['macd'].values,s = area, color='red')
