@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 import numpy as np
 import pandas as pd
+import talib as ta
 
 
 def line_intersections(df, columns):
@@ -11,7 +12,7 @@ def line_intersections(df, columns):
     :param columns:
     :return:
     '''
-
+    min_macddif = df.macddif.min()
     intersections = []
     point = {}
     for i, row in df.iterrows():
@@ -27,6 +28,8 @@ def line_intersections(df, columns):
             intersections.append({"macd_shape": 'inc_touch_zero'})
         elif (point['00'] >= np.float64(0)) and (point['01'] <= np.float64(0)):  # 自上而下经过zero轴，以快线为准
             intersections.append({"macd_shape": 'dec_touch_zero'})
+        elif (row.macddif == min_macddif):
+            intersections.append({"macd_shape": 'min_point'})
         else:
             intersections.append({"macd_shape": None})
     return pd.DataFrame(intersections).reset_index(drop=True)
@@ -39,6 +42,6 @@ def price_divergence(df):
     :param df:
     :return:
     '''
-    pass
+    print df.price_change.sum()
 
 
