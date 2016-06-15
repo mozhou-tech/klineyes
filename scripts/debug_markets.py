@@ -6,24 +6,28 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
+import datetime as dt
+from klineyes.markets.stocks.pattern_tool import price_divergence
 
 
 # print kline_data.get_basic_data(ktype='30', code='000001', start='2016-04-11', end='2016-06-12')
-df = kline_data.get_indicator(ktype='30', code='300181', start='2016-04-01', end='2016-06-13', indicator=['MACD'])
+df = kline_data.get_indicator(ktype='30', code='300181', start='2016-04-01', end='2016-06-15', indicator=['MACD'])
 # print df[df.macdhist == df[df.macd_shape == 'golden'].macdhist.min()]
-golden = df[df.macd_shape == 'golden']
-death = df[df.macd_shape == 'death']
-inc_touch_zero = df[df.macd_shape == 'inc_touch_zero']
-negative_macd_median = df[df.macddif < 0.].macddif.median()   # macd 的中位数
-positive_macd_median = df[df.macddif > 0.].macddif.median()   # macd 的中位数
+golden_intersections = df[(df.macd_shape == 'golden') | (df.macd_shape == 'inc_touch_zero')].reset_index(drop=True)
+for i, row in golden_intersections.iterrows():
+    if row.macd_shape == 'golden':
+        next_row = golden_intersections.loc[i+1:i+1]
+        if not next_row.empty:
+            next_row_shape = next_row.macd_shape.values[0]
+            if next_row_shape == 'inc_touch_zero':      # DIF在金叉后后面触碰zero
+                if ((next_row.date - row.date) >= dt.timedelta(days=5)).values[0]:  # 两次形态相差5天以上
+                    range_df = df[(df.date > row.date) & (df.date < next_row.date.values[0])]
+                    print price_divergence(range_df)
 
-for i, row in golden.iterrows():
-    if row.macddif < negative_macd_median:
-        print 'negative'
-        print row.date
-    elif row.macddif > positive_macd_median:
-        print 'positive' + str(row.macddif)
-        print row.date
+
+
+
+
 
 
 

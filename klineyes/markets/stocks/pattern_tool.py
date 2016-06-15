@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 
+
 def line_intersections(df, columns):
     '''
     columns fast in 0 计算两条直线的交点
@@ -28,6 +29,16 @@ def line_intersections(df, columns):
             intersections.append({"macd_shape": 'dec_touch_zero'})
         else:
             intersections.append({"macd_shape": None})
-    return pd.DataFrame(intersections).reset_index().drop('index', 1)
+    return pd.DataFrame(intersections).reset_index(drop=True)
+
+
+def price_divergence(df):
+    '''
+    MACD close 背离判断
+    should have column date,
+    :param df:
+    :return:
+    '''
+    pass
 
 
