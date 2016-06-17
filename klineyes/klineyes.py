@@ -3,8 +3,8 @@
 import pandas as pd
 
 from .util.validator import data_validator
-from .classifier import single
-from .classifier import multi
+from .classifier import candlestick_single
+from .classifier import candlestick_multi
 
 '''
 主要模块
@@ -24,7 +24,7 @@ def get_dates_pattern(input_data, ptypes = None):
     if ptypes['single']:  # 处理单日情况
         ret_dict = []
         for i, row in df.iterrows():
-            feature = single.classifier_single_date(row, ptypes=ptypes['single'])
+            feature = candlestick_single.classifier_single_date(row, ptypes=ptypes['single'])
             if feature is not None:
                 ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
         result_holder = ret_func(pd.DataFrame(ret_dict))
@@ -35,7 +35,7 @@ def get_dates_pattern(input_data, ptypes = None):
                 data_cell = df[i-1:i+1] if ptype == 'multi_double' else None
                 data_cell = df[i-2:i+1] if data_cell is None and ptype == 'triple_fivefold' else data_cell
                 data_cell = df[i-4:i+1] if data_cell is None and ptype == 'multi_fivefold' else data_cell
-                feature = multi.classifier_multi_date(data_cell, ptype=ptype)
+                feature = candlestick_multi.classifier_multi_date(data_cell, ptype=ptype)
                 if feature is not None:
                     ret_dict.append({'tradeDate': row.tradeDate, 'pattern': feature})
             if type(result_holder) == pd.core.frame.DataFrame:

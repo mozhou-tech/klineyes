@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from klineyes.classifier.patterns import classifier_dict
-from klineyes.classifier.single import get_candlestick_feature
+from klineyes.classifier.candlestick_single import get_candlestick_feature
 
 def classifier_multi_date(data, ptype):
     '''
