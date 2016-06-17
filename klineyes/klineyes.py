@@ -43,3 +43,7 @@ def get_dates_pattern(input_data, ptypes = None):
             else:
                 result_holder = ret_func(pd.DataFrame(ret_dict))
     return result_holder
+
+
+def custom_judge():
+    pass

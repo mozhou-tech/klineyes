@@ -3,8 +3,8 @@
 import pandas as pd
 import talib as ta
 
+from klineyes.classifier.tools import line_intersections
 from klineyes.markets.cache import read_cache
-from klineyes.markets.stocks.pattern_tool import line_intersections
 
 '''
 A tushare wrapper

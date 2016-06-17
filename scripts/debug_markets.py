@@ -1,38 +1,52 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from klineyes.markets.stocks.kline_data import kline_data
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
 import datetime as dt
-from klineyes.markets.stocks.pattern_tool import price_divergence
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from matplotlib.gridspec import GridSpec
+
+from klineyes.markets.stocks.kline_data import kline_data
 
 # print kline_data.get_basic_data(ktype='30', code='000001', start='2016-04-11', end='2016-06-12')
 # 300181 300121
-df = kline_data.get_indicator(ktype='30', code='300121', start='2016-04-01', end='2016-06-15', indicator=['MACD'])
+df = kline_data.get_indicator(ktype='30', code='300181', start='2016-04-01', end='2016-06-17', indicator=['MACD'])
 
 # print df[df.macdhist == df[df.macd_shape == 'golden'].macdhist.min()]
-golden_intersections = df[(df.macd_shape == 'golden') | (df.macd_shape == 'inc_touch_zero')].reset_index(drop=True)
+golden_intersections = df[(df.macd_shape == 'golden')].reset_index(drop=True)
+zero_intersections = df[(df.macd_shape == 'inc_touch_zero')].reset_index(drop=True)
 min_point_date = df[(df.macd_shape == 'min_point')].date.values[0]
 
-for i, row in golden_intersections.iterrows():
-    if row.macd_shape == 'golden':
-        # next_row = golden_intersections.loc[i+1:i+1]
-        print row.date - min_point_date
-        # if not next_row.empty:
-        #     next_row_shape = next_row.macd_shape.values[0]
-        #     if next_row_shape == 'inc_touch_zero':      # DIF在金叉后后面触碰zero
-        #         if ((next_row.date - row.date) >= dt.timedelta(days=5)).values[0]:  # 两次形态相差5天以上
-        #             range_df = df[(df.date > row.date) & (df.date < next_row.date.values[0])]
-        #             print row.date
-        #             print price_divergence(range_df)
 
 
 
 
+
+def get_golden_date(golden_intersections):
+    golden_date = None
+    zero_points_list = []
+    for i, row in golden_intersections.iterrows():
+            if dt.timedelta(days=0) < (row.date - min_point_date) <= dt.timedelta(days=1):
+                golden_date = row.date
+    if golden_date is not None:
+        for i, row in zero_intersections.iterrows():
+            if (row.date - golden_date) >= dt.timedelta(days=1):
+                zero_points_list.append(row.date)
+    if len(zero_points_list) > 0:
+        return min(zero_points_list)
+            # if not next_row.empty:
+            #     next_row_shape = next_row.macd_shape.values[0]
+            #     if next_row_shape == 'inc_touch_zero':      # DIF在金叉后后面触碰zero
+            #         if ((next_row.date - row.date) >= dt.timedelta(days=5)).values[0]:  # 两次形态相差5天以上
+            #             range_df = df[(df.date > row.date) & (df.date < next_row.date.values[0])]
+            #             print row.date
+            #             print price_divergence(range_df)
+
+
+
+print get_golden_date(golden_intersections)
 
 
 
