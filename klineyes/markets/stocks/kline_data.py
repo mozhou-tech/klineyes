@@ -39,6 +39,12 @@ class KlineData:
         if 'MFI' in indicator:
             real = ta.MFI(df.high.values, df.low.values, df.close.values, df.volume.values, timeperiod=14)
             ret_df = KlineData._merge_dataframe(pd.DataFrame([real]).T.rename(columns={0: "mfi"}), ret_df)
+        if 'ATR' in indicator:
+            real = ta.ROC(df.high.values, df.low.values, df.close.values, timeperiod=14)
+            ret_df = KlineData._merge_dataframe(pd.DataFrame([real]).T.rename(columns={0: "atr"}), ret_df)
+        if 'ROCR' in indicator:
+            real = ta.ROCR(df.close.values, timeperiod=10)
+            ret_df = KlineData._merge_dataframe(pd.DataFrame([real]).T.rename(columns={0: "rocr"}), ret_df)
         ret_df['date'] = pd.to_datetime(ret_df['date'], format='%Y-%m-%d')
         return ret_df
 
