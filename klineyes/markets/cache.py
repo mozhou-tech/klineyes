@@ -96,7 +96,7 @@ class Cache:
         :return:
         '''
         if self._is_cache_file_updated(date) is False:
-            print 'refresh caching of month '+ date[:7]
+            print 'refresh caching of month ' + date[:7]
             self._cache_monthly(date)
         return pd.read_csv(self._get_cache_filename(date=date))
 
