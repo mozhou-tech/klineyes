@@ -6,7 +6,7 @@ import tushare as ts
 import datetime as dt
 import os.path
 from dateutil.relativedelta import relativedelta
-from time import sleep,ctime,strftime,gmtime
+from time import sleep,ctime,strftime,gmtime,localtime
 import pandas as pd
 
 class Cache:
@@ -107,12 +107,15 @@ class Cache:
         :param date:
         :return:
         '''
-        cache_date = dt.datetime.strptime(strftime('%Y-%m-%d', gmtime(os.path.getmtime(self._get_cache_filename(date)))), '%Y-%m-%d')
-        date = dt.datetime.strptime(date, '%Y-%m-%d')
+        now_time_str = dt.datetime.now().strftime("%H:%M:%S")
+        cache_date = dt.datetime.strptime(strftime('%Y-%m-%d %H:%M:%S', localtime(os.path.getmtime(self._get_cache_filename(date)))), '%Y-%m-%d %H:%M:%S')
+        request_date = dt.datetime.strptime(date + ' ' + now_time_str, '%Y-%m-%d %H:%M:%S')
+        date_dif = request_date - cache_date
+        dif_limit = dt.timedelta(hours=1)
         # 如果当天更新过，就返回是最新的，否则下载日期大于索取的数据的日期的就是最新的
-        if cache_date == dt.datetime.strptime(strftime('%Y-%m-%d'), '%Y-%m-%d'):
+        if date_dif < dt.timedelta(seconds=1):
             return True
-        return date < cache_date
+        return False
 
 
     def _apply_daterange(self, df):
